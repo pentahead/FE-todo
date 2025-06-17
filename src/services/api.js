@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const userServiceUrl =
-  process.env.REACT_APP_USER_SERVICE_URL ;
+  "https://backend-hpgudzech6h5e9e7.indonesiacentral-01.azurewebsites.net";
 const todoServiceUrl =
-  process.env.REACT_APP_TODO_SERVICE_URL ;
+  "https://backend2-eudvexdnfqe5h5d5.indonesiacentral-01.azurewebsites.net";
 
 // Setup axios interceptor for JWT
 const setupAuthInterceptor = (token) => {
