@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const userServiceUrl =
-  process.env.REACT_APP_USER_SERVICE_URL || "http://localhost:3001";
+  process.env.REACT_APP_USER_SERVICE_URL ;
 const todoServiceUrl =
-  process.env.REACT_APP_TODO_SERVICE_URL || "http://localhost:3002";
+  process.env.REACT_APP_TODO_SERVICE_URL ;
 
 // Setup axios interceptor for JWT
 const setupAuthInterceptor = (token) => {
