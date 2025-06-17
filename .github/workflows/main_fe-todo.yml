@@ -1,11 +1,3 @@
-name: Build and deploy React app to Azure Web App - FE-todo
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,42 +17,23 @@ jobs:
           npm install
           npm run build
 
+      - name: Check if build folder exists
+        run: |
+          if [ ! -d "build" ]; then
+            echo "❌ Build folder not found!"
+            exit 1
+          fi
+
+      - name: Copy web.config to build (optional)
+        run: |
+          cp public/web.config build/
+
       - name: Zip build folder
-        run: zip -r release.zip build
+        run: |
+          zip -r release.zip build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: react-app
           path: release.zip
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: react-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D85422362BC34F96941EDE50AF554560 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D54F9457E6A24930BC87E36A7452890E }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B389DC4EBAAE43B9A293827E57E14B4A }}
-
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'FE-todo'
-          slot-name: 'Production'
-          package: build
