@@ -1,6 +1,6 @@
 # Todo App Frontend
 
-This is a Reaczt frontend for the Todo App microservices. It connects to both the User Service and Todo Service to provide a seamless user experience..
+This is a Reaczt frontend for the Todo App microservices. It connects to both the User Service and Todo Service to provide a seamless user experience.
 
 ## Features
 
